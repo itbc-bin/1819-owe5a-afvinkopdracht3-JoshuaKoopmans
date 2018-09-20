@@ -42,16 +42,24 @@ public class Race extends JFrame implements ActionListener {
 
     /** declaratie van variabelen */
     /* (1) Declareer hier een constante int met de naam lengte en een waarde van 250 */
+    public final int LENGTE = 250;
     /* (2) Declareer hier h1, h2, h3, h4 van het type Paard
      *  Deze paarden instantieer je later in het programma
      */
+    Paard h1 = new Paard("Red", "red");
+    Paard h2 = new Paard("Blue", "blue");
+    Paard h3 = new Paard("Yellow", "yellow");
+    Paard h4 = new Paard("Green", "green");
     /* (3) Declareer een button met de naam button van het type JButton */
     private JPanel panel;
+    JButton button = new JButton("Click!");
 
     /** Applicatie - main functie voor runnen applicatie */
     public static void main(String[] args) {
         Race frame = new Race();
         /* (4) Geef het frame een breedte van 400 en hoogte van 140 */
+        frame.setSize(400, 140);
+
         frame.createGUI();
         frame.setVisible(true);
     }
