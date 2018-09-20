@@ -84,11 +84,11 @@ public class Race extends JFrame implements ActionListener {
          * kunt initialiseren.
          */
 
-        h1 = new Paard("John", Color.red);
-        h2 = new Paard("Bob", Color.BLUE);
-        h3 = new Paard("Cleatus", Color.green);
-        h4 = new Paard("Old Horse Jenkins", Color.orange);
-        h5 = new Paard("Black death", Color.black);
+        h1 = new Paard("John", Color.red, "res/fish_purple.png");
+        h2 = new Paard("Bob", Color.BLUE, "res/fish_blue.png");
+        h3 = new Paard("Cleatus", Color.green, "res/fish_green.png");
+        h4 = new Paard("Old Horse Jenkins", Color.orange, "res/fish_yellow.png");
+        h5 = new Paard("Black death", Color.black ,"res/fish.png");
 
         /** Loop tot een paard over de finish is*/
         while (h1.getAfstand() < lengte
@@ -163,16 +163,11 @@ public class Race extends JFrame implements ActionListener {
         BufferedImage image;
         try {
 
-            image = ImageIO.read(new File("res/fish.png"));
-            g.drawImage(image, h.getAfstand(), 20 * h.getPaardNummer(), null);
+            g.drawImage(h.createImage(), h.getAfstand(), 20 * h.getPaardNummer(), null);
 
         } catch (Exception e){
             e.printStackTrace();
         }
-
-        //COLOR Progression bars BELOW
-        //g.setColor(h.getKleur());
-        //g.fillRect(10, 20 * h.getPaardNummer(), h.getAfstand(), 5);
 
     }
 
