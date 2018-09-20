@@ -36,7 +36,11 @@ package afvink3;
  */
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import javax.swing.*;
+import javax.imageio.ImageIO;
 
 public class Race extends JFrame implements ActionListener {
 
@@ -50,6 +54,7 @@ public class Race extends JFrame implements ActionListener {
     Paard h2;
     Paard h3;
     Paard h4;
+    Paard h5;
     /* (3) Declareer een button met de naam button van het type JButton */
     private JPanel panel;
     private JButton button;
@@ -58,7 +63,7 @@ public class Race extends JFrame implements ActionListener {
     public static void main(String[] args) {
         Race frame = new Race();
         /* (4) Geef het frame een breedte van 400 en hoogte van 140 */
-        frame.setSize(400, 140);
+        frame.setSize(400, 170);
 
         frame.createGUI();
         frame.setVisible(true);
@@ -71,7 +76,7 @@ public class Race extends JFrame implements ActionListener {
         /** Tekenen van de finish streep */
         /* (5) Geef de finish streep een rode kleur */
         g.setColor(Color.red);
-        g.fillRect(lengte, 0, 3, 100);
+        g.fillRect(lengte+10, 0, 3, 150);
         /**(6) Creatie van 4 paarden
          * Dit is een instantiering van de 4 paard objecten
          * Bij de instantiering geef je de paarden een naam en een kleur mee
@@ -83,30 +88,42 @@ public class Race extends JFrame implements ActionListener {
         h2 = new Paard("Bob", Color.BLUE);
         h3 = new Paard("Cleatus", Color.green);
         h4 = new Paard("Old Horse Jenkins", Color.orange);
+        h5 = new Paard("Black death", Color.black);
 
         /** Loop tot een paard over de finish is*/
         while (h1.getAfstand() < lengte
                 && h2.getAfstand() < lengte
                 && h3.getAfstand() < lengte
-                && h4.getAfstand() < lengte) {
+                && h4.getAfstand() < lengte
+                && h5.getAfstand() < lengte) {
             h1.run();
             h2.run();
             h3.run();
             h4.run();
+            h5.run();
+
 
             /* (7) Voeg hier een aanroep van de methode pauzeer toe zodanig
              * dat er 1 seconde pauze is. De methode pauzeer is onderdeel
              * van deze class
              */
-            pauzeer(1000);
+            pauzeer(500);
             /* (8) Voeg hier code in om 4 paarden te tekenen die rennen
              * Dus een call van de methode tekenPaard
              */
+            g.setColor(Color.white);
+            g.fillRect(0,0,300,140);
+            g.setColor(Color.red);
+            g.fillRect(lengte+10, 0, 3, 150);
             tekenPaard(g, h1);
             tekenPaard(g, h2);
             tekenPaard(g, h3);
             tekenPaard(g, h4);
+            tekenPaard(g, h5);
+
+
         }
+
         /** Kijk welk paard gewonnen heeft
          */
         if (h1.getAfstand() > lengte) {
@@ -121,6 +138,9 @@ public class Race extends JFrame implements ActionListener {
         if (h4.getAfstand() > lengte) {
             JOptionPane.showMessageDialog(null, h4.getNaam() + " gewonnen!");
         }
+        if (h5.getAfstand() > lengte) {
+            JOptionPane.showMessageDialog(null, h5.getNaam() + " gewonnen!");
+        }
     }
 
     /** Creatie van de GUI*/
@@ -129,7 +149,7 @@ public class Race extends JFrame implements ActionListener {
         Container window = getContentPane();
         window.setLayout(new FlowLayout());
         panel = new JPanel();
-        panel.setPreferredSize(new Dimension(300, 100));
+        panel.setPreferredSize(new Dimension(300, 140));
         panel.setBackground(Color.white);
         window.add(panel);
         /* (9) Zet hier de tekst Run! op de button */
@@ -140,8 +160,20 @@ public class Race extends JFrame implements ActionListener {
 
     /** Teken het paard */
     private void tekenPaard(Graphics g, Paard h) {
-        g.setColor(h.getKleur());
-        g.fillRect(10, 20 * h.getPaardNummer(), h.getAfstand(), 5);
+        BufferedImage image;
+        try {
+
+            image = ImageIO.read(new File("res/fish.png"));
+            g.drawImage(image, h.getAfstand(), 20 * h.getPaardNummer(), null);
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        //COLOR Progression bars BELOW
+        //g.setColor(h.getKleur());
+        //g.fillRect(10, 20 * h.getPaardNummer(), h.getAfstand(), 5);
+
     }
 
     /** Actie indien de button geklikt is*/
